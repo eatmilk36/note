@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34607.119
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "note", "note\note.csproj", "{FCC6DDCA-2464-44FB-9B52-FB2C38609838}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "noteTest", "noteTest\noteTest.csproj", "{0C38EA5F-4C7A-4CE6-A085-1B4666DAC855}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FCC6DDCA-2464-44FB-9B52-FB2C38609838}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FCC6DDCA-2464-44FB-9B52-FB2C38609838}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FCC6DDCA-2464-44FB-9B52-FB2C38609838}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FCC6DDCA-2464-44FB-9B52-FB2C38609838}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0C38EA5F-4C7A-4CE6-A085-1B4666DAC855}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0C38EA5F-4C7A-4CE6-A085-1B4666DAC855}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0C38EA5F-4C7A-4CE6-A085-1B4666DAC855}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0C38EA5F-4C7A-4CE6-A085-1B4666DAC855}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {91A0C532-4F99-4637-A591-48DE5262E19B}
+	EndGlobalSection
+EndGlobal

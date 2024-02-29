@@ -1,39 +1,55 @@
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Mvc;
+using Atlas.Com.Entities;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
+var Configuration = builder.Configuration;
+
 builder.Services.AddControllers();
+
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
+
+builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddCors(p => p.AddPolicy("corsapp", builder =>
 {
     builder.WithOrigins("*").AllowAnyMethod().AllowAnyHeader();
 }));
 
+builder.Services.AddDbContext<NoteDbContext>(builder =>
+{
+    builder.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"), optionsBuilder =>
+    {
+        optionsBuilder.CommandTimeout(10);
+        optionsBuilder.EnableRetryOnFailure();
+    });
+
+    builder.EnableSensitiveDataLogging().EnableDetailedErrors();
+});
+
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (!app.Environment.IsDevelopment())
+app.MapWhen(x => !x.Request.Path.Value.StartsWith("/api"), builder =>
 {
-    app.UseExceptionHandler("/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-    app.UseHsts();
-}
-
-app.UseHttpsRedirection();
-app.UseStaticFiles();
-
-app.UseRouting();
-
-app.UseSpa(spa => {
-    spa.Options.SourcePath = "ClientApp";
-    spa.UseProxyToSpaDevelopmentServer("http://localhost:3333");
+    builder.UseSpa(spa =>
+    {
+        spa.Options.SourcePath = "ClientApp";
+        spa.UseProxyToSpaDevelopmentServer("http://localhost:3333");
+    });
 });
 
 app.UseCors("corsapp");
 
+app.UseHttpsRedirection();
+
+app.UseStaticFiles();
+
+app.UseRouting();
+
 app.UseAuthorization();
 
-//app.MapRazorPages();
+app.MapControllerRoute(
+    name: "default",
+    pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.Run();

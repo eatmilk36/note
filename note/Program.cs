@@ -1,7 +1,14 @@
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Mvc;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-builder.Services.AddRazorPages();
+builder.Services.AddControllers();
+
+builder.Services.AddCors(p => p.AddPolicy("corsapp", builder =>
+{
+    builder.WithOrigins("*").AllowAnyMethod().AllowAnyHeader();
+}));
 
 var app = builder.Build();
 
@@ -18,8 +25,15 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseSpa(spa => {
+    spa.Options.SourcePath = "ClientApp";
+    spa.UseProxyToSpaDevelopmentServer("http://localhost:3333");
+});
+
+app.UseCors("corsapp");
+
 app.UseAuthorization();
 
-app.MapRazorPages();
+//app.MapRazorPages();
 
 app.Run();

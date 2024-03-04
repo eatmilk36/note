@@ -1,5 +1,8 @@
 using Atlas.Com.Entities;
 using Microsoft.EntityFrameworkCore;
+using StackExchange.Redis.Extensions.Core.Configuration;
+using StackExchange.Redis.Extensions.Newtonsoft;
+using StackExchange.Redis.Extensions.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,6 +29,20 @@ builder.Services.AddDbContext<NoteDbContext>(builder =>
 
     builder.EnableSensitiveDataLogging().EnableDetailedErrors();
 });
+
+var redisConfig = Configuration.GetSection("Redis").Get<RedisConfig>();
+
+var redisConfiguration = new RedisConfiguration()
+{
+    ConnectionString = redisConfig!.Host
+};
+
+builder.Services.AddStackExchangeRedisExtensions<NewtonsoftSerializer>(redisConfiguration);
+
+//builder.Services.AddDistributedRedisCache(options =>
+//{
+//    options.Configuration = redisConfig!.Host;
+//});
 
 var app = builder.Build();
 

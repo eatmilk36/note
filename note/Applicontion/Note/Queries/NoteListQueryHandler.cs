@@ -1,7 +1,8 @@
-﻿using Atlas.Com.Entities;
-using MediatR;
+﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
+using note.Entities;
+using note.Entities.note;
 using StackExchange.Redis;
 using StackExchange.Redis.Extensions.Core.Abstractions;
 using StackExchange.Redis.Extensions.Core.Implementations;

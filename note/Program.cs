@@ -1,5 +1,7 @@
-using Atlas.Com.Entities;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using note.Entities;
+using note.Entities.note;
+using note.Entities.zero;
 using StackExchange.Redis.Extensions.Core.Configuration;
 using StackExchange.Redis.Extensions.Newtonsoft;
 using StackExchange.Redis.Extensions.AspNetCore;
@@ -14,20 +16,26 @@ builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Progr
 
 builder.Services.AddEndpointsApiExplorer();
 
-builder.Services.AddCors(p => p.AddPolicy("corsapp", builder =>
-{
-    builder.WithOrigins("*").AllowAnyMethod().AllowAnyHeader();
-}));
+builder.Services.AddCors(p =>
+    p.AddPolicy("corsapp", builder => { builder.WithOrigins("*").AllowAnyMethod().AllowAnyHeader(); }));
 
-builder.Services.AddDbContext<NoteDbContext>(builder =>
+builder.Services.AddDbContext<NoteDbContext>(optionsBuilder =>
 {
-    builder.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"), optionsBuilder =>
+    optionsBuilder.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"), optionsBuilder =>
     {
         optionsBuilder.CommandTimeout(10);
         optionsBuilder.EnableRetryOnFailure();
     });
 
-    builder.EnableSensitiveDataLogging().EnableDetailedErrors();
+    optionsBuilder.EnableSensitiveDataLogging().EnableDetailedErrors();
+});
+
+builder.Services.AddDbContext<ZeroDbContext>(optionsBuilder =>
+{
+    optionsBuilder.UseMySql(Configuration.GetConnectionString("MysqlConnection")
+        , ServerVersion.AutoDetect(Configuration.GetConnectionString("MysqlConnection")));
+    
+    optionsBuilder.EnableSensitiveDataLogging().EnableDetailedErrors();
 });
 
 var redisConfig = Configuration.GetSection("Redis").Get<RedisConfig>();

@@ -1,4 +1,4 @@
-﻿namespace note.Entities
+﻿namespace note.Entities.note
 {
     public class Note
     {

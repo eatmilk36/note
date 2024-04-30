@@ -1,8 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
-using note.Entities;
 
-namespace Atlas.Com.Entities
+namespace note.Entities.note
 {
     public class NoteDbContext : DbContext
     {

@@ -1,22 +1,23 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using note.Applicontion.Note.Queries;
+using note.Applicontion.Zero;
 
 namespace note.Controllers
 {
-    [Route("/api")]
-    public class NoteController : Controller
+    [Route("/api/zero")]
+    public class ZeroController : Controller
     {
         private readonly IMediator _mediator;
 
-        public NoteController(IMediator mediator)
+        public ZeroController(IMediator mediator)
         {
             _mediator = mediator;
         }
 
         [HttpGet]
         [Route("List")]
-        public async Task<NoteListQueryResponse> Get([FromForm] string a, [FromServices] NoteListQuery query)
+        public async Task<List<ZeroListQueryResponse>> Get(ZeroListQuery query)
         {
             //var query = new NoteListQuery();
             return await _mediator.Send(query);

@@ -1,8 +1,9 @@
 ﻿using System.Threading.Tasks;
-using Atlas.Com.Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
+using note.Entities;
+using note.Entities.note;
 using NSubstitute;
 using NUnit.Framework;
 
